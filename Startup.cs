@@ -33,6 +33,16 @@ namespace MSIT141API
                 options.UseSqlServer(Configuration.GetConnectionString("NorthwindConnection"));
             });
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    //builder.WithOrigins("http://www.sample.com","https://localhost:44389");
+                    builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
+
             // services.AddControllers().AddXmlSerializerFormatters();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -54,6 +64,8 @@ namespace MSIT141API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
